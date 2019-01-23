@@ -44,3 +44,24 @@ describe("Creating documents", () => {
     done();
   });
 });
+
+describe("updating documents", () => {
+  it("can update the email field", done => {
+    const newUser = new User({
+      username: "test1234",
+      email: "dhuber666@gmail.com",
+      password: "S232323jölkjöadsf!!"
+    });
+    newUser.save().then(() => {
+      User.findById(newUser._id).then(user => {
+        user.username = "einNeuerTest";
+        user.save().then(() => {
+          User.findById(newUser._id).then(user => {
+            assert(user.username === "einNeuerTest");
+            done();
+          });
+        });
+      });
+    });
+  });
+});

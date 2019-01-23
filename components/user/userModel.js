@@ -1,11 +1,14 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
 
-const userSchema = new mongoose.Schema({
-  username: String,
-  email: String,
-  password: { type: String, select: false }
-});
+const userSchema = new mongoose.Schema(
+  {
+    username: String,
+    email: String,
+    password: { type: String, select: false }
+  },
+  { timestamps: { createdAt: "created_at", updatedAt: "updated_at" } }
+);
 
 userSchema.pre("save", function(done) {
   const user = this;
@@ -35,8 +38,6 @@ userSchema.methods.comparePassword = function(password, cb) {
 };
 
 userSchema.methods.joiValidate = function() {
-  console.log(typeof this.username);
-
   // pull out just the properties that has to be checked (generated fields from mongoose we ignore)
   const { username, email, password } = this;
   const user = { username, email, password };

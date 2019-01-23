@@ -1,12 +1,13 @@
 //inside tests/test_helper.js
 require("dotenv").config();
 require("../components/user/userModel.test");
+require("../components/user/userController.test");
 
 const { MONGO_URI } = process.env;
 
 const mongoose = require("mongoose");
 //tell mongoose to use es6 implementation of promises
-mongoose.Promise = global.Promise;
+mongoose.Promise = Promise;
 
 before(done => {
   mongoose.connect(

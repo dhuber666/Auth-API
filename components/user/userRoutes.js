@@ -1,19 +1,27 @@
+const userController = require("./userController");
+const User = require("./userModel");
+
 module.exports = (function() {
   const router = require("express").Router();
 
-  router.post("/register", (req, res) => {
+  router.post("/register", async (req, res) => {
     const { id } = res.cookie;
+    console.log(res.cookie.id);
 
     // first we look if the user is alreay authenticated
     if (id) {
-      res.status(200).json("User is already signed in");
+      res.status(400).json("User is already signed in");
       return;
     }
-    // TODO: then we check for validation
 
     // then we check if the user is already in the database
+    const isExisting = await userController.isAlreadyExisting(id);
+    if (isExisting) {
+      res.status(400).json("User is already existing in the database");
+      return;
+    }
 
-    // then we create the user in the database and returning it excluding password
+    userController.registerUser(req, res);
   });
 
   router.get("/me", (req, res) => {
