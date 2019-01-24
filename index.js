@@ -12,7 +12,7 @@ const { PORT, MONGO_URI } = process.env;
 app.use(
   session({
     secret: "abcF55ss!11",
-    resave: false,
+    resave: true,
     saveUninitialized: false,
     cookie: { secure: false, maxAge: 1000 * 60 * 60 * 24 * 2 }
   })

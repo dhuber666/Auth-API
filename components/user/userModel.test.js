@@ -10,6 +10,7 @@ describe("Creating documents", () => {
       email: "dhuber666@gmail.com",
       password: "mypassword"
     });
+
     newUser.save().then(() => done());
   });
   it("creates a new user", done => {
